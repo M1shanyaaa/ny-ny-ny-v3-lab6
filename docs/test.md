@@ -260,9 +260,48 @@ def get_users(db: Session = Depends(get_db)):
 uvicorn main:app --reload
 ```
 
-### 8. Використання API (POST та GET)
+### 8. Під'єднання до БД
 ```python
+2025-05-18 18:58:38,511 INFO sqlalchemy.engine.Engine SELECT DATABASE()
+2025-05-18 18:58:38,511 INFO sqlalchemy.engine.Engine [raw sql] {}
+2025-05-18 18:58:38,512 INFO sqlalchemy.engine.Engine SELECT @@sql_mode
+2025-05-18 18:58:38,512 INFO sqlalchemy.engine.Engine [raw sql] {}
+2025-05-18 18:58:38,512 INFO sqlalchemy.engine.Engine SELECT @@lower_case_table_names
+2025-05-18 18:58:38,512 INFO sqlalchemy.engine.Engine [raw sql] {}
+2025-05-18 18:58:38,514 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2025-05-18 18:58:38,514 INFO sqlalchemy.engine.Engine DESCRIBE `mydb`.`role`
+2025-05-18 18:58:38,514 INFO sqlalchemy.engine.Engine [raw sql] {}
+2025-05-18 18:58:38,516 INFO sqlalchemy.engine.Engine DESCRIBE `mydb`.`user`
+2025-05-18 18:58:38,516 INFO sqlalchemy.engine.Engine [raw sql] {}
+2025-05-18 18:58:38,517 INFO sqlalchemy.engine.Engine DESCRIBE `mydb`.`userrole`
+2025-05-18 18:58:38,517 INFO sqlalchemy.engine.Engine [raw sql] {}
+2025-05-18 18:58:38,517 INFO sqlalchemy.engine.Engine DESCRIBE `mydb`.`expertisecategory`
+2025-05-18 18:58:38,517 INFO sqlalchemy.engine.Engine [raw sql] {}
+2025-05-18 18:58:38,518 INFO sqlalchemy.engine.Engine DESCRIBE `mydb`.`userexpertise`
+2025-05-18 18:58:38,518 INFO sqlalchemy.engine.Engine [raw sql] {}
+2025-05-18 18:58:38,519 INFO sqlalchemy.engine.Engine DESCRIBE `mydb`.`quiz`
+2025-05-18 18:58:38,519 INFO sqlalchemy.engine.Engine [raw sql] {}
+2025-05-18 18:58:38,520 INFO sqlalchemy.engine.Engine DESCRIBE `mydb`.`question`
+2025-05-18 18:58:38,520 INFO sqlalchemy.engine.Engine [raw sql] {}
+2025-05-18 18:58:38,520 INFO sqlalchemy.engine.Engine DESCRIBE `mydb`.`option`
+2025-05-18 18:58:38,520 INFO sqlalchemy.engine.Engine [raw sql] {}
+2025-05-18 18:58:38,521 INFO sqlalchemy.engine.Engine DESCRIBE `mydb`.`surveysession`
+2025-05-18 18:58:38,521 INFO sqlalchemy.engine.Engine [raw sql] {}
+2025-05-18 18:58:38,522 INFO sqlalchemy.engine.Engine DESCRIBE `mydb`.`answer`
+2025-05-18 18:58:38,522 INFO sqlalchemy.engine.Engine [raw sql] {}
+2025-05-18 18:58:38,523 INFO sqlalchemy.engine.Engine DESCRIBE `mydb`.`selectedoption`
+2025-05-18 18:58:38,523 INFO sqlalchemy.engine.Engine [raw sql] {}
+2025-05-18 18:58:38,524 INFO sqlalchemy.engine.Engine COMMIT
+
+Process finished with exit code 0
+```
+### 9. Використання API (POST та GET)
+![](img/Знімок екрана 2025-05-18 184919)
+
+```json
 
 ```
+
+
 *В цьому розділі необхідно вказати засоби тестування, навести вихідні коди тестів та результати тестування.*
 
