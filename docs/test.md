@@ -296,7 +296,7 @@ uvicorn main:app --reload
 Process finished with exit code 0
 ```
 ### 9. Використання API (POST та GET)
-![](img/Знімок екрана 2025-05-18 184919.png)
+![](img/description_to_API.png)
 
 ### POST
 ```json
@@ -309,6 +309,7 @@ Process finished with exit code 0
 ![](img/post_role.png)
 
 ### GET
+![](img/get_role.png)
 
 
 *В цьому розділі необхідно вказати засоби тестування, навести вихідні коди тестів та результати тестування.*
