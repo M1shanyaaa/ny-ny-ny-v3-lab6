@@ -296,12 +296,18 @@ uvicorn main:app --reload
 Process finished with exit code 0
 ```
 ### 9. Використання API (POST та GET)
-![](img/Знімок екрана 2025-05-18 184919)
+![](img/Знімок екрана 2025-05-18 184919.png)
 
 ### POST
 ```json
-
+{
+  "id": 4,
+  "name": "Test1",
+  "description": "g"
+}
 ```
+![](img/post_role.png)
+
 ### GET
 
 
