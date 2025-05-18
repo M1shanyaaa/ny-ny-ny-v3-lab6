@@ -298,6 +298,7 @@ Process finished with exit code 0
 ### 9. Використання API (POST та GET)
 ![](img/Знімок екрана 2025-05-18 184919)
 
+
 ```json
 
 ```
