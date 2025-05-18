@@ -295,7 +295,7 @@ uvicorn main:app --reload
 
 Process finished with exit code 0
 ```
-### 9. Використання API (POST та GET)
+### 9. Використання API (POST та GET) та перевірка в Swagger UI
 ![](img/description_to_API.png)
 
 ### POST
@@ -312,5 +312,4 @@ Process finished with exit code 0
 ![](img/get_role.png)
 
 
-*В цьому розділі необхідно вказати засоби тестування, навести вихідні коди тестів та результати тестування.*
 
