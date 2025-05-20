@@ -164,37 +164,21 @@
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `mydb` ;
-
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `expert_survey` ;
 CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
 USE `mydb` ;
 
--- -----------------------------------------------------
--- Table `mydb`.`Role`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Role` ;
+DROP TABLE IF EXISTS `UserRole`, `Quiz`, `UserExpertise`, `SurveySession`, `Answer`, `SelectedOption`, `Option`, `Question`, `User`, `Role`, `ExpertiseCategory`;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Role` (
-  `id` INT NOT NULL,
+CREATE TABLE `Role` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(50) NOT NULL,
   `description` VARCHAR(100) NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `mydb`.`User`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`User` ;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`User` (
-  `id` INT NOT NULL,
+CREATE TABLE `User` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `picture` MEDIUMBLOB NULL,
   `created_at` DATETIME NULL,
   `updated_at` DATETIME NULL,
@@ -203,40 +187,24 @@ CREATE TABLE IF NOT EXISTS `mydb`.`User` (
   `name` VARCHAR(50) NOT NULL,
   `surname` VARCHAR(50) NOT NULL,
   `nickname` VARCHAR(50) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `mydb`.`UserRole`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`UserRole` ;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`UserRole` (
+CREATE TABLE `UserRole` (
   `User_id` INT NOT NULL,
   `Role_id` INT NOT NULL,
-  INDEX `fk_UserRole_Role_idx` (`Role_id` ASC) VISIBLE,
-  INDEX `fk_UserRole_User1_idx` (`User_id` ASC) VISIBLE,
+  INDEX `fk_UserRole_Role_idx` (`Role_id` ASC),
+  INDEX `fk_UserRole_User1_idx` (`User_id` ASC),
   CONSTRAINT `fk_UserRole_Role`
-    FOREIGN KEY (`Role_id`)
-    REFERENCES `mydb`.`Role` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    FOREIGN KEY (`Role_id`) REFERENCES `Role` (`id`)
+    ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_UserRole_User1`
-    FOREIGN KEY (`User_id`)
-    REFERENCES `mydb`.`User` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    FOREIGN KEY (`User_id`) REFERENCES `User` (`id`)
+    ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `mydb`.`Quiz`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Quiz` ;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`Quiz` (
-  `id` INT NOT NULL,
+CREATE TABLE `Quiz` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `created_by` INT NULL,
   `created_at` DATETIME NULL,
   `updated_at` DATETIME NULL,
@@ -244,173 +212,109 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Quiz` (
   `description` VARCHAR(255) NULL,
   `User_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_Quiz_User1_idx` (`User_id` ASC) VISIBLE,
+  INDEX `fk_Quiz_User1_idx` (`User_id` ASC),
   CONSTRAINT `fk_Quiz_User1`
-    FOREIGN KEY (`User_id`)
-    REFERENCES `mydb`.`User` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    FOREIGN KEY (`User_id`) REFERENCES `User` (`id`)
+    ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `mydb`.`ExpertiseCategory`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`ExpertiseCategory` ;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`ExpertiseCategory` (
-  `id` INT NOT NULL,
+CREATE TABLE `ExpertiseCategory` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(50) NULL,
   `description` VARCHAR(100) NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `mydb`.`UserExpertise`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`UserExpertise` ;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`UserExpertise` (
+CREATE TABLE `UserExpertise` (
   `ExpertiseCategory_id` INT NOT NULL,
   `User_id` INT NOT NULL,
-  INDEX `fk_UserExpertise_ExpertiseCategory1_idx` (`ExpertiseCategory_id` ASC) VISIBLE,
-  INDEX `fk_UserExpertise_User1_idx` (`User_id` ASC) VISIBLE,
+  INDEX `fk_UserExpertise_ExpertiseCategory1_idx` (`ExpertiseCategory_id` ASC),
+  INDEX `fk_UserExpertise_User1_idx` (`User_id` ASC),
   CONSTRAINT `fk_UserExpertise_ExpertiseCategory1`
-    FOREIGN KEY (`ExpertiseCategory_id`)
-    REFERENCES `mydb`.`ExpertiseCategory` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    FOREIGN KEY (`ExpertiseCategory_id`) REFERENCES `ExpertiseCategory` (`id`)
+    ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_UserExpertise_User1`
-    FOREIGN KEY (`User_id`)
-    REFERENCES `mydb`.`User` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    FOREIGN KEY (`User_id`) REFERENCES `User` (`id`)
+    ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `mydb`.`Question`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Question` ;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`Question` (
-  `id` INT NOT NULL,
+CREATE TABLE `Question` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `Quiz_id` INT NOT NULL,
   `number` INT NULL,
   `description` VARCHAR(255) NULL,
   `type` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_Question_Quiz1_idx` (`Quiz_id` ASC) VISIBLE,
+  INDEX `fk_Question_Quiz1_idx` (`Quiz_id` ASC),
   CONSTRAINT `fk_Question_Quiz1`
-    FOREIGN KEY (`Quiz_id`)
-    REFERENCES `mydb`.`Quiz` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    FOREIGN KEY (`Quiz_id`) REFERENCES `Quiz` (`id`)
+    ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `mydb`.`SurveySession`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`SurveySession` ;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`SurveySession` (
-  `id` INT NOT NULL,
+CREATE TABLE `SurveySession` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `User_id` INT NOT NULL,
   `Quiz_id` INT NOT NULL,
   `started_at` DATETIME NULL,
   `completed_at` DATETIME NULL,
   `status` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_SurveySession_User1_idx` (`User_id` ASC) VISIBLE,
-  INDEX `fk_SurveySession_Quiz1_idx` (`Quiz_id` ASC) VISIBLE,
+  INDEX `fk_SurveySession_User1_idx` (`User_id` ASC),
+  INDEX `fk_SurveySession_Quiz1_idx` (`Quiz_id` ASC),
   CONSTRAINT `fk_SurveySession_User1`
-    FOREIGN KEY (`User_id`)
-    REFERENCES `mydb`.`User` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    FOREIGN KEY (`User_id`) REFERENCES `User` (`id`)
+    ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_SurveySession_Quiz1`
-    FOREIGN KEY (`Quiz_id`)
-    REFERENCES `mydb`.`Quiz` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    FOREIGN KEY (`Quiz_id`) REFERENCES `Quiz` (`id`)
+    ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `mydb`.`Option`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Option` ;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`Option` (
-  `id` INT NOT NULL,
+CREATE TABLE `Option` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `Question_id` INT NOT NULL,
   `number` INT NULL,
   `description` INT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_Option_Question1_idx` (`Question_id` ASC) VISIBLE,
+  INDEX `fk_Option_Question1_idx` (`Question_id` ASC),
   CONSTRAINT `fk_Option_Question1`
-    FOREIGN KEY (`Question_id`)
-    REFERENCES `mydb`.`Question` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    FOREIGN KEY (`Question_id`) REFERENCES `Question` (`id`)
+    ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `mydb`.`Answer`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Answer` ;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`Answer` (
-  `id` INT NOT NULL,
+CREATE TABLE `Answer` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `SurveySession_id` INT NOT NULL,
   `Question_id` INT NOT NULL,
   `file` MEDIUMBLOB NULL,
   `text` VARCHAR(255) NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_Answer_Question1_idx` (`Question_id` ASC) VISIBLE,
-  INDEX `fk_Answer_SurveySession1_idx` (`SurveySession_id` ASC) VISIBLE,
+  INDEX `fk_Answer_Question1_idx` (`Question_id` ASC),
+  INDEX `fk_Answer_SurveySession1_idx` (`SurveySession_id` ASC),
   CONSTRAINT `fk_Answer_Question1`
-    FOREIGN KEY (`Question_id`)
-    REFERENCES `mydb`.`Question` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    FOREIGN KEY (`Question_id`) REFERENCES `Question` (`id`)
+    ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Answer_SurveySession1`
-    FOREIGN KEY (`SurveySession_id`)
-    REFERENCES `mydb`.`SurveySession` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    FOREIGN KEY (`SurveySession_id`) REFERENCES `SurveySession` (`id`)
+    ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `mydb`.`SelectedOption`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`SelectedOption` ;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`SelectedOption` (
+CREATE TABLE `SelectedOption` (
   `Answer_id` INT NOT NULL,
   `Option_id` INT NOT NULL,
-  INDEX `fk_SelectedOption_Option1_idx` (`Option_id` ASC) VISIBLE,
-  INDEX `fk_SelectedOption_Answer1_idx` (`Answer_id` ASC) VISIBLE,
+  INDEX `fk_SelectedOption_Option1_idx` (`Option_id` ASC),
+  INDEX `fk_SelectedOption_Answer1_idx` (`Answer_id` ASC),
   CONSTRAINT `fk_SelectedOption_Option1`
-    FOREIGN KEY (`Option_id`)
-    REFERENCES `mydb`.`Option` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    FOREIGN KEY (`Option_id`) REFERENCES `Option` (`id`)
+    ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_SelectedOption_Answer1`
-    FOREIGN KEY (`Answer_id`)
-    REFERENCES `mydb`.`Answer` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
+    FOREIGN KEY (`Answer_id`) REFERENCES `Answer` (`id`)
+    ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE = InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
 </code></pre>
 <h1 id="insert-script"><a class="header" href="#insert-script">Insert script</a></h1>
 <pre><code class="language-sql">-- Role
