@@ -2,6 +2,8 @@
 
 ## Опис FastAPI-проєкту для RESTful сервісу опитувань
 ### 1. Встановлення бібліотек
+
+
 ```python
 python -m venv venv
 venv\Scripts\activate
